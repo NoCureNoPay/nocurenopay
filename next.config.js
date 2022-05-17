@@ -8,7 +8,7 @@ const nextConfig = {
   
   reactStrictMode: true,
   images: {
-      domains: ['newtestserver.com','localhost'],
+      domains: ['nocurenopay.net','localhost'],
   },
 }
 
