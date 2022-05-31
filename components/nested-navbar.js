@@ -49,7 +49,14 @@ export default function NestedNavbar() {
         <div className="container">
             <nav className="navbar navbar-expand-lg navbar-light py-4">
                 <Link href="/">
-                <a className="navbar-brand text-black font-weight-bold logo">LOGO</a>
+                <a className="navbar-brand text-black font-weight-bold logo custom_header_logo">
+                <Image
+                    src="/images/logo.png"
+                    width={150}
+                    height={80}
+                    alt=""
+                />
+                </a>
                 </Link>
 
 

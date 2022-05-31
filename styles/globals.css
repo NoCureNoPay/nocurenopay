@@ -1921,3 +1921,16 @@ border: 1px solid #D4D4D4;
 .m_body{
     margin-top: 12px;
 }
+
+
+.custom_header_logo img{
+    width: 150px !important;
+    height: auto !important;
+    min-height: inherit !important;
+}
+
+.custom_footer_logo img{
+    width: 150px !important;
+    height: auto !important;
+    min-height: inherit !important;
+}

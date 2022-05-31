@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from "next/image";
 import axios from "../lib/axios";
 import React, {useState, useEffect} from 'react';
 import ReactHtmlParser from "react-html-parser";
@@ -29,11 +30,16 @@ if (fetchCMSData != 1111){
           <div className="row justify-content-between align-item-center">
             <div className="col-lg-3 col-sm-12 col-12">
               <div className="footer-logo-link">
-                <div className="logo_ftr">
+                <div className="logo_ftr custom_footer_logo">
                 <Link href="/">
                   <a className="lgo-text"
                   >
-                    LOGO
+                  <Image
+                    src="/images/logo.png"
+                    width={150}
+                    height={80}
+                    alt=""
+                  />
                   </a>
                   </Link>
                 </div>
