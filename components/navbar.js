@@ -59,7 +59,7 @@ if (fetchCMSData != 1111){
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light pt-4">
         <Link href="/">
-          <a className="navbar-brand text-white font-weight-bold custom_header_logo">
+          <a className="navbar-brand text-white font-weight-bold custom_header_logo drkbg">
           <Image
             src="/images/logo.png"
             width={150}
