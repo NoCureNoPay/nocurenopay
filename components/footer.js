@@ -37,7 +37,7 @@ if (fetchCMSData != 1111){
                   <Image
                     src="/images/logo.png"
                     width={150}
-                    height={80}
+                    height={31}
                     alt=""
                   />
                   </a>

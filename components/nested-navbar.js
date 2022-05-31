@@ -53,7 +53,7 @@ export default function NestedNavbar() {
                 <Image
                     src="/images/logo.png"
                     width={150}
-                    height={80}
+                    height={31}
                     alt=""
                 />
                 </a>
