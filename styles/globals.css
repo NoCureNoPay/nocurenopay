@@ -1934,3 +1934,6 @@ border: 1px solid #D4D4D4;
     height: auto !important;
     min-height: inherit !important;
 }
+.navbar-brand{
+    line-height: 0;
+}

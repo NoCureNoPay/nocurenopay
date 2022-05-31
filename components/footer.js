@@ -32,7 +32,7 @@ if (fetchCMSData != 1111){
               <div className="footer-logo-link">
                 <div className="logo_ftr custom_footer_logo">
                 <Link href="/">
-                  <a className="lgo-text"
+                  <a className="lgo-text mb-0"
                   >
                   <Image
                     src="/images/logo.png"
