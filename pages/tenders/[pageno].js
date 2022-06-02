@@ -48,7 +48,7 @@ export default function myData({tenders}) {
                     </div>
                     <div className="details_box right_data d-flex">
                         <label htmlFor="">Your Budget :-</label>
-                        <p> ${tenders.data.budget}</p>
+                        <p> {tenders.data.budget} {tenders.data.currency}</p>
                     </div>
                  </div>
                  {/* <div className="main_detail_box my-3">

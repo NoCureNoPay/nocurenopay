@@ -21,6 +21,7 @@ export default function Footer() {
   var context_dt2 = "";
 if (fetchCMSData != 1111){
    context_dt = fetchCMSData[0].content_body;
+   context_dt2 = fetchCMSData[1].content_body;
   //console.log(fetchCMSData);
 } 
   return (
@@ -123,10 +124,7 @@ if (fetchCMSData != 1111){
                     {/* <h2 className="footer-title">Newsletter</h2> */}
                     <ul>
                       <li>
-                        <a href="#">
-                          Subscribe to our news feed and stay updated to our
-                          latest news.Don&apos;t worry, we do not spam!
-                        </a>
+                        {ReactHtmlParser( context_dt2 )}
                       </li>
                     </ul>
                     {/* <div className="search_bx_ftr">

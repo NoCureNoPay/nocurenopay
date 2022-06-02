@@ -13,10 +13,14 @@ import { getCookies, setCookies, removeCookies } from 'cookies-next';
 export default function Requirement({categories,terms}) {
   console.log(categories);
   const {register, handleSubmit, formState: { errors },reset}=useForm();
+  const [isActive, setActive] = useState("false");
   const router=useRouter();
   const MySwal = withReactContent(Swal);
   const [file, setFile] = useState();
   const [category, setCategory] = useState();
+  const toggledescrip = () => {
+    setActive(!isActive);  
+  };
   function handleChange(event) {
     setFile(event.target.files);
     console.log(event.target.files);
@@ -155,11 +159,22 @@ export default function Requirement({categories,terms}) {
               <div className="requirement_decription_area text-center ">
                 <h3 className="plus_example">
                   {" "}
-                  <a href="#">
+                  <a href="#javascript" onClick={toggledescrip}>
                     {" "}
                     + see example of a good requirement decription here{" "}
                   </a>
                 </h3>
+                <div className={isActive ? 'infomainbxnw d-none': 'infomainbxnw '}>
+                    <div className="infonwtop__modal_box">
+                      
+                        <div className="craftform__modal_meta">
+                            <span className="craftform__modalpretext">Example</span>
+                            <span className="craftform__modalicon close" onClick={toggledescrip}><i className="fa fa-times" aria-hidden="true"></i></span>
+                        </div>
+                        <div className="craftform__modal_content">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et scelerisque diam. Curabitur sodales sit amet purus id malesuada.</p></div>
+                    </div>
+                </div>
                 <div className="accept">
                   <div className="t_area">
                   <textarea className="description" {...register('description', { required: true })} name="description" placeholder="Give a short description of your requirement here">

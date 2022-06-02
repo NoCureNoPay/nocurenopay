@@ -8,9 +8,11 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import React, {useState} from 'react';
 import Link from "next/link";
+import ReactHtmlParser from "react-html-parser";
+import { getCookies, setCookies,checkCookies, removeCookies } from 'cookies-next';
 
-export default function ContactUs() {
-
+export default function ContactUs({cmss}) {
+    console.log(cmss);
     const {register, handleSubmit, formState: { errors },reset}=useForm();
     const router=useRouter();
     const MySwal = withReactContent(Swal);
@@ -79,29 +81,29 @@ export default function ContactUs() {
     <!-- requirement middle body part start -->*/}
     <div className="container pxx">
        <div className="quote_top_section mt-5 mb-3">
-                <h2 className="text-center">Many benefits of being a part of our network</h2>
-                <p className="text-center">Lorem ipsum dolor sit amet consectetur adipiscing <br></br> elit. Cras viverra eros quam</p>
+                <h2 className="text-center">{ReactHtmlParser( cmss[0].content_body )}</h2>
+                {ReactHtmlParser( cmss[1].content_body )}
             </div>
             <div className="row text-center justify-content-center my-5">
                 <div className="col-md-4 col-sm-6 col-12">
                     <div className="quote_mini_box text-center">
-                        <Image height="145" width="180" src="/images/Meeting.gif" alt=""/>
-                        <h2>More customers</h2>
-                        <p>Lorem ipsum dolor sit amet,<br></br> consectetur adipis elit.</p>
+                        <Image height="145" width="180" src={cmss[2].image} alt=""/>
+                        <h2>{ReactHtmlParser( cmss[3].content_body )}</h2>
+                        {ReactHtmlParser( cmss[4].content_body )}
                     </div>
                 </div>
                 <div className="col-md-4 col-sm-6 col-12">
                     <div className="quote_mini_box text-center">
-                        <Image height="145" width="180" src="/images/Boy_cool.gif" alt=""/>
-                        <h2>Business guarantee</h2>
-                        <p>Lorem ipsum dolor sit amet,<br></br> consectetur adipis elit.</p>
+                        <Image height="145" width="180" src={cmss[5].image} alt=""/>
+                        <h2>{ReactHtmlParser( cmss[6].content_body )}</h2>
+                        {ReactHtmlParser( cmss[7].content_body )}
                     </div>
                 </div>
                 <div className="col-md-4 col-sm-6 col-12">
                     <div className="quote_mini_box text-center">
-                        <Image height="145" width="180" src="/images/3_PPl.gif" alt=""/>
-                        <h2>Small competition</h2>
-                        <p>Lorem ipsum dolor sit amet,<br></br> consectetur adipis elit.</p>
+                        <Image height="145" width="180" src={cmss[8].image} alt=""/>
+                        <h2>{ReactHtmlParser( cmss[9].content_body )}</h2>
+                        {ReactHtmlParser( cmss[10].content_body )}
                     </div>
                 </div>
             
@@ -109,16 +111,16 @@ export default function ContactUs() {
                     
                 <div className="col-md-4 col-sm-6 col-12">
                     <div className="quote_mini_box text-center">
-                        <Image height="145" width="180" src="/images/Call_center.gif" alt=""/>
-                        <h2>Personal consultant</h2>
-                        <p>Lorem ipsum dolor sit amet,<br></br> consectetur adipis elit. </p>
+                        <Image height="145" width="180" src={cmss[11].image} alt=""/>
+                        <h2>{ReactHtmlParser( cmss[12].content_body )}</h2>
+                        {ReactHtmlParser( cmss[13].content_body )}
                     </div>
                 </div>
                 <div className="col-md-4 col-sm-6 col-12">
                     <div className="quote_mini_box text-center">
-                        <Image height="145" width="180" src="/images/Chat.gif" alt=""/>
-                        <h2>Screening</h2>
-                        <p>Lorem ipsum dolor sit amet,<br></br> consectetur adipis elit.</p>
+                        <Image height="145" width="180" src={cmss[14].image} alt=""/>
+                        <h2>{ReactHtmlParser( cmss[15].content_body )}</h2>
+                        {ReactHtmlParser( cmss[16].content_body )}
                     </div>
                 </div>
           </div>
@@ -131,10 +133,10 @@ export default function ContactUs() {
          <div className="make_deal ">
             <div className="quote_top_section mt-5 mb-3">
                 <div className="hand_shake text-center py-3">
-                <Image height="145" width="180" className="" src="/images/hand_shake.png" alt=""/>
+                <Image height="145" width="180" className="" src={cmss[17].image} alt=""/>
             </div>
-                <h2 className="text-center">Many benefits of being a part of our network</h2>
-                <p className="text-center">Lorem ipsum dolor sit amet consectetur adipiscing <br></br> elit. Cras viverra eros quam</p>
+                <h2 className="text-center">{ReactHtmlParser( cmss[18].content_body )}</h2>
+                {ReactHtmlParser( cmss[19].content_body )}
             </div>
             <div className="form-floating mb-3 for_n">
                 <input type="text" name="company_name" {...register('company_name', { required: true })} className="form-control colr" id="floatingInput" placeholder="Company name"/>
@@ -183,6 +185,24 @@ export default function ContactUs() {
   );
 }
 
+export async function getServerSideProps({ req, res }) {
+  let langSelected=getCookies({ req, res});
+  let lang="";
+  if (!langSelected.langSelected){ 
+    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
+    lang="en";
+  }else{
+    lang=langSelected.langSelected;
+  }
+  
+  const [cms] = await Promise.all([ 
+    axios.get(`/get-cms-content?lang=${lang}&slug=contact_us`)
+  ]);
+  const [cmss] = await Promise.all([
+    cms.data.data,
+  ]);
+  return { props: { cmss } };
+}
 
 ContactUs.getLayout = function getLayout(page) {
   return <NestedLayout>{page}</NestedLayout>;
