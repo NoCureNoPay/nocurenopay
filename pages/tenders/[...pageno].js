@@ -6,7 +6,7 @@ import axios from "../../lib/axios";
 import Footer from "../../components/footer";
 import React, { useState } from 'react';
 import Link from "next/link";
-export default function myData({ tenders }) {
+export default function MyData({ tenders }) {
   const router = useRouter()
   const { pageno } = router.query
   console.log(tenders)
