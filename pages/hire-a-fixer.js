@@ -11,10 +11,13 @@ import React, { useState } from 'react';
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
 import { useEffect } from "react";
 import { hireAfixerData } from "../data/Hire-a-fixer";
+import { staticData } from "../data/Static-page";
+import { useRef } from "react";
 
 export default function HireAFixer({ terms}) {
-
+  const fileRef = useRef(null);
   let pageData=hireAfixerData
+  let staticpageData=staticData
   let myLan
  
   if (typeof window !== 'undefined') {
@@ -25,7 +28,7 @@ export default function HireAFixer({ terms}) {
   const router = useRouter();
   const MySwal = withReactContent(Swal);
   const [file, setFile] = useState();
-  const [language, setLanguage] = useState(myLan || 'en')
+  const [language, setLanguage] = useState(myLan || 'da')
 
   useEffect(()=>{
 
@@ -131,7 +134,10 @@ export default function HireAFixer({ terms}) {
 console.log(language)
 console.log(pageData)
 
-
+const handleInputFile = (e) => {
+  const [file] = e.target.files;
+  console.log(file);
+};
 
   return (
     <>
@@ -158,63 +164,98 @@ console.log(pageData)
                   <div className="form-floating a_title">
                     <input type="text" className="form-control colr" name="title"  {...register('title', { required: true })} id="floatingInput" placeholder={(language=='da')?(`${pageData.titleDEN}`):(`${pageData.titleEN}`)} />
                     <label htmlFor="floatingInput">{(language=='da')?(`${pageData.titleDEN}`):(`${pageData.titleEN}`)}</label>
-                    <span className="errors">{errors.title?.type === 'required' && "Title is required"}</span>
+                    <span className="errors">{errors.title?.type === 'required' && ((language=='da')?(`${pageData.titlerequriedDEN}`):(`${pageData.titlerequriedEN}`))}</span>
                   </div>
                   <div className="t_area">
                     <textarea className="description" {...register('description', { required: true })} name="description" placeholder={(language=='da')?(`${pageData.descriptionDEN}`):(`${pageData.descriptionEN}`)}></textarea>
-                    <span className="errors">{errors.description?.type === 'required' && "Description is required"}</span>
+                    <span className="errors">{errors.description?.type === 'required' && ((language=='da')?(`${pageData.descriptionrequriedDEN}`):(`${pageData.descriptionrequriedEN}`))}</span>
                     <div className="peacture_file">
-                      <input type="file" {...register('file', { size: true, type: true })} name="file" accept="image/*" onChange={handleChange} multiple></input> (Optional)
+                    {(language == 'da') ? (
+                        <>
+                          <div className="parentFile-div">
+                            <a className="btn btn-primary" onClick={() => fileRef.current.click()}>
+                            {(`${pageData.chooseDEN}`)}
+                            </a>
+                            <input
+                              ref={fileRef}
+                              onChange={handleChange}
+                              multiple={true}
+                              type="file"
+                              className="my-file-input"
+                              style={{ display: 'none' }}
+                              hidden
+                            />
+                          </div>
+
+                        </>
+                      ) : (<>
+
+                        <div className="parentFile-div">
+                          <a className="btn btn-primary" onClick={() => fileRef.current.click()}>
+                          {(`${pageData.chooseEN}`)}
+                          </a>
+                          <input
+                            ref={fileRef}
+                            onChange={handleChange}
+                            multiple={true}
+                            type="file"
+                            className="my-file-input"
+                            style={{ display: 'none' }}
+                            hidden
+                          />
+                        </div>
+                        {/* <input type="file" {...register('file', { size: true, type: true })} name="file" accept="image/*" onChange={handleChange} multiple></input> (Optional) */}
+                      </>)}
                     </div>
-                    <span className="errors">{errors.file?.type === 'required' && "File is required"}</span>
-                    <span className="errors">{errors.file?.type === 'size' && "file size too large.Maximum 20MB."}</span>
-                    <span className="errors">{errors.file?.type === 'type' && "files must be a file of type: jpg, jpeg, png, webp"}</span>
+                    <span className="errors">{errors.file?.type === 'required' && ((language=='da')?(`${pageData.filerequriedDEN}`):(`${pageData.filerequriedEN}`))}</span>
+                    <span className="errors">{errors.file?.type === 'size' && ((language=='da')?(`${pageData.filesizeDEN}`):(`${pageData.filesizeEN}`))}</span>
+                    <span className="errors">{errors.file?.type === 'type' && ((language=='da')?(`${pageData.filetypeDEN}`):(`${pageData.filetypeEN}`))}</span>
                   </div>
                   <div className="information_of_all">
                     <div className="form-floating mb-3 a_deadline">
                       <input type="date" className="form-control colr" id="floatingInput" name="deadline" {...register('deadline', { required: true })} placeholder="Add deadline" />
-                      <label htmlFor="floatingInput">Add deadline</label>
+                      <label htmlFor="floatingInput">{(language=='da')?(`${pageData.deadlineDEN}`):(`${pageData.deadlineEN}`)}</label>
                       <i className="icofont-ui-calendar"></i>
-                      <span className="errors">{errors.deadline?.type === 'required' && "Deadline is required"}</span>
+                      <span className="errors">{errors.deadline?.type === 'required' && ((language=='da')?(`${pageData.deadlinerequriedDEN}`):(`${pageData.deadlinerequriedEN}`))}</span>
                     </div>
                     <div className="form-floating a_budget ">
                       <input type="number" className="form-control colr" id="floatingPassword" name="budget" {...register('budget', { required: true, min: 1 })} placeholder="Add your budget" />
-                      <label htmlFor="floatingPassword">Add your budget</label>
+                      <label htmlFor="floatingPassword">{(language=='da')?(`${pageData.budgetDEN}`):(`${pageData.budgetEN}`)}</label>
                       <i className="icofont-dollar"></i>
-                      <span className="errors">{errors.budget?.type === 'required' && "Budget amount is required"}</span>
-                      <span className="errors">{errors.budget?.type === 'min' && "The budget will be more than 0"}</span>
+                      <span className="errors">{errors.budget?.type === 'required' && ((language=='da')?(`${pageData.budgetrequriedDEN}`):(`${pageData.budgetrequriedEN}`))}</span>
+                      <span className="errors">{errors.budget?.type === 'min' && ((language=='da')?(`${pageData.budgetlimitDEN}`):(`${pageData.budgetlimitEN}`))}</span>
                     </div>
 
                   </div>
                   <div className="information_of_all">
                     <div className="form-floating mb-3 mob">
                       <input type="number" className="form-control colr" id="floatingInput" placeholder="Phone" {...register('phone', { required: true })} />
-                      <label htmlFor="floatingInput">Phone</label>
-                      <span className="errors">{errors.phone?.type === 'required' && "Phone number is required"}</span>
+                      <label htmlFor="floatingInput">{(language=='da')?(`${pageData.phoneDEN}`):(`${pageData.phoneEN}`)}</label>
+                      <span className="errors">{errors.phone?.type === 'required' && ((language=='da')?(`${pageData.phonerequriedDEN}`):(`${pageData.phonerequriedEN}`))}</span>
                     </div>
                     <div className="form-floating mail ">
                       <input type="email" className="form-control colr" id="floatingPassword" {...register('email', { required: true })} placeholder="E-mail" />
                       <label htmlFor="floatingPassword">E-mail</label>
-                      <span className="errors">{errors.email?.type === 'required' && "Email is required"}</span>
+                      <span className="errors">{errors.email?.type === 'required' && ((language=='da')?(`${pageData.emailrequriedDEN}`):(`${pageData.emailrequriedEN}`))}</span>
                     </div>
 
                   </div>
                   <div className="form-floating mb-3 for_n">
                     <input type="text" className="form-control colr" id="floatingInput" {...register('name', { required: true })} placeholder="name example" />
-                    <label htmlFor="floatingInput">Name</label>
-                    <span className="errors">{errors.name?.type === 'required' && "Name is required"}</span>
+                    <label htmlFor="floatingInput">{(language=='da')?(`${pageData.nameDEN}`):(`${pageData.nameEN}`)}</label>
+                    <span className="errors">{errors.name?.type === 'required' && ((language=='da')?(`${pageData.namerequriedDEN}`):(`${pageData.namerequriedEN}`))}</span>
                   </div>
 
                   <div className="information_of_all">
                     <div className="form-floating mb-3 adr">
                       <input type="text" className="form-control colr " {...register('address', { required: true })} id="floatingInput" placeholder="Address" />
-                      <label htmlFor="floatingInput">Address</label>
-                      <span className="errors">{errors.address?.type === 'required' && "address is required"}</span>
+                      <label htmlFor="floatingInput">{(language=='da')?(`${pageData.addressDEN}`):(`${pageData.addressEN}`)}</label>
+                      <span className="errors">{errors.address?.type === 'required' && ((language=='da')?(`${pageData.addressrequriedDEN}`):(`${pageData.addressrequriedEN}`))}</span>
                     </div>
                     <div className="form-floating zip">
                       <input type="text" className="form-control colr " {...register('zipcode', { required: true })} id="floatingPassword" placeholder="code" />
-                      <label htmlFor="floatingPassword">ZIP-code</label>
-                      <span className="errors">{errors.zipcode?.type === 'required' && "Zipcode is required"}</span>
+                      <label htmlFor="floatingPassword">{(language=='da')?(`${pageData.zipcodeDEN}`):(`${pageData.zipcodeEN}`)}</label>
+                      <span className="errors">{errors.zipcode?.type === 'required' && ((language=='da')?(`${pageData.zipcoderequriedDEN}`):(`${pageData.zipcoderequriedEN}`))}</span>
                     </div>
                   </div>
                   <div className="form-floating mb-3 for_n">
@@ -225,8 +266,8 @@ console.log(pageData)
                       <option value="BTC">BTC</option>
                       <option value="ETH">ETH</option>
                     </select>
-                    <label htmlFor="currency">Currency</label>
-                    <span className="errors">{errors.currency?.type === 'required' && "Currency is required"}</span>
+                    <label htmlFor="currency">{(language=='da')?(`${pageData.currencyDEN}`):(`${pageData.currencyEN}`)}</label>
+                    <span className="errors">{errors.currency?.type === 'required' && ((language=='da')?(`${pageData.currencyrequriedDEN}`):(`${pageData.currencyrequriedEN}`))}</span>
                   </div>
                   <div className="condition">
                     <div className="mb-3 form-check">
@@ -245,7 +286,7 @@ console.log(pageData)
                               <div className=" show_deta">
                                 <div style={{ padding: '0px 26px' }} className="container">
                                   <div style={{ margin: '21px 0px 0px 0px' }} className="">
-                                    <h2 className="text-center t_c ">Terms and Conditions</h2>
+                                    <h2 className="text-center t_c ">{(language=='da')?(`${staticpageData.termsDEN}`):(`${staticpageData.termsEN}`)}</h2>
                                     <div dangerouslySetInnerHTML={{ __html: terms.content_body }}>
 
                                     </div>
@@ -265,10 +306,10 @@ console.log(pageData)
                     </div>
                   </div>
                   <div className="for_required">
-                    <span className="errors">{errors.accept_checkbox?.type === 'required' && "Checkbox is required"}</span>
+                    <span className="errors">{errors.accept_checkbox?.type === 'required' && ((language=='da')?(`${pageData.checkboxrequriedDEN}`):(`${pageData.checkboxrequriedEN}`))}</span>
                   </div>
                   <div className="get_offer text-center">
-                    <button>Submit Your Requirement</button>
+                    <button>{(language=='da')?(`${pageData.buttonDEN}`):(`${pageData.buttonEN}`)}</button>
                   </div>
                 </div>
               </form>
@@ -286,8 +327,8 @@ export async function getServerSideProps({ req, res }) {
   let langSelected = getCookies({ req, res });
   let lang = "";
   if (!langSelected.langSelected) {
-    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
-    lang = "en";
+    setCookies('langSelected', 'da', { req, res, maxAge: 60 * 6 * 24 });
+    lang = "da";
   } else {
     lang = langSelected.langSelected;
   }

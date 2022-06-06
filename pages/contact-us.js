@@ -10,12 +10,20 @@ import React, {useState} from 'react';
 import Link from "next/link";
 import ReactHtmlParser from "react-html-parser";
 import { getCookies, setCookies,checkCookies, removeCookies } from 'cookies-next';
+import { contactusData } from "../data/Contact-us";
 
 export default function ContactUs({cmss}) {
     console.log(cmss);
     const {register, handleSubmit, formState: { errors },reset}=useForm();
     const router=useRouter();
     const MySwal = withReactContent(Swal);
+    let contactpageData=contactusData;
+  let myLan
+ 
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+  const [language, setLanguage] = useState(myLan || 'da')
     function onSubmit(values)
     {
         const formdata = new FormData();
@@ -75,7 +83,7 @@ export default function ContactUs({cmss}) {
 
       {/*<!-- banner part start-->*/}
       <div className="requirement_banner private_banner">
-        <h2 className="require_h2 text-center"> Become part of network</h2>
+        <h2 className="require_h2 text-center"> {(language=='da')?(`${contactpageData.headingDEN}`):(`${contactpageData.headingEN}`)}</h2>
       </div>
       {/*<!-- banner part end-->
     <!-- requirement middle body part start -->*/}
@@ -140,39 +148,39 @@ export default function ContactUs({cmss}) {
             </div>
             <div className="form-floating mb-3 for_n">
                 <input type="text" name="company_name" {...register('company_name', { required: true })} className="form-control colr" id="floatingInput" placeholder="Company name"/>
-                <label htmlFor="floatingInput">Company name</label>
-                <span className="errors">{errors.company_name?.type === 'required' && "Company name is required"}</span>
+                <label htmlFor="floatingInput">{(language=='da')?(`${contactpageData.companyDEN}`):(`${contactpageData.companyEN}`)}</label>
+                <span className="errors">{errors.company_name?.type === 'required' && ((language=='da')?(`${contactpageData.companyrequriedDEN}`):(`${contactpageData.companyrequriedEN}`))}</span>
               </div>
               <div className="information_of_all">
                 <div className="form-floating mb-3 name">
                     <input type="text" name="name" {...register('name', { required: true })} className="form-control colr" id="floatingInput" placeholder="Name"/>
-                    <label htmlFor="floatingInput">Name</label>
-                    <span className="errors">{errors.name?.type === 'required' && "Name is required"}</span>
+                    <label htmlFor="floatingInput">{(language=='da')?(`${contactpageData.nameDEN}`):(`${contactpageData.nameEN}`)}</label>
+                    <span className="errors">{errors.name?.type === 'required' && ((language=='da')?(`${contactpageData.namerequriedDEN}`):(`${contactpageData.namerequriedEN}`))}</span>
                   </div>
                   <div className="form-floating telephone ">
                     <input type="text" name="phone" className="form-control colr" {...register('phone', { required: true })} id="floatingPassword" placeholder="Telephone"/>
-                    <label htmlFor="floatingPassword">Telephone</label>
-                    <span className="errors">{errors.phone?.type === 'required' && "Phone No. is required"}</span>
+                    <label htmlFor="floatingPassword">{(language=='da')?(`${contactpageData.telephoneDEN}`):(`${contactpageData.telephoneEN}`)}</label>
+                    <span className="errors">{errors.phone?.type === 'required' && ((language=='da')?(`${contactpageData.phonereqiriedDEN}`):(`${contactpageData.phonereqiriedEN}`))}</span>
                 </div>
                
             </div>
               <div className="information_of_all">
                 <div className="form-floating mb-3 name">
                     <input type="email" name="email" {...register('email', { required: true })} className="form-control colr" id="floatingEmail" placeholder="Email"/>
-                    <label htmlFor="floatingEmail">Email</label>
-                    <span className="errors">{errors.email?.type === 'required' && "Email is required"}</span>
+                    <label htmlFor="floatingEmail">{(language=='da')?(`${contactpageData.emailDEN}`):(`${contactpageData.emailEN}`)}</label>
+                    <span className="errors">{errors.email?.type === 'required' && ((language=='da')?(`${contactpageData.emailrequriedDEN}`):(`${contactpageData.emailrequriedEN}`))}</span>
                   </div>
                   <div className="form-floating telephone ">
                     <input type="text" name="subject" {...register('subject', { required: true })} className="form-control colr" id="floatingSubject" placeholder="Subject"/>
-                    <label htmlFor="floatingSubject">Subject</label>
-                    <span className="errors">{errors.subject?.type === 'required' && "Subject is required"}</span>
+                    <label htmlFor="floatingSubject">{(language=='da')?(`${contactpageData.subjectDEN}`):(`${contactpageData.subjectEN}`)}</label>
+                    <span className="errors">{errors.subject?.type === 'required' && ((language=='da')?(`${contactpageData.subjectrequriedDEN}`):(`${contactpageData.subjectrequriedEN}`))}</span>
                 </div>
                
             </div>
             <textarea className="description" {...register('description', { required: true })} placeholder="Here you can add additional information (Not required)"></textarea>
-            <span className="errors">{errors.description?.type === 'required' && "Description is required"}</span>
+            <span className="errors">{errors.description?.type === 'required' && ((language=='da')?(`${contactpageData.descriptionrequriedDEN}`):(`${contactpageData.descriptionrequriedEN}`))}</span>
             <div className=" text-center pb-5 p_tenders">
-                <button> Submit Now </button>
+                <button> {(language=='da')?(`${contactpageData.submitbuttonDEN}`):(`${contactpageData.submitbuttonEN}`)} </button>
             </div>
          </div>
          </form>
@@ -189,8 +197,8 @@ export async function getServerSideProps({ req, res }) {
   let langSelected=getCookies({ req, res});
   let lang="";
   if (!langSelected.langSelected){ 
-    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
-    lang="en";
+    setCookies('langSelected', 'da', { req, res, maxAge: 60 * 6 * 24 });
+    lang="da";
   }else{
     lang=langSelected.langSelected;
   }

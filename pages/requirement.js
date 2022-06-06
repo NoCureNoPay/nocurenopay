@@ -9,15 +9,29 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import React, {useState} from 'react';
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
+import { requirementData } from "../data/Requirement";
+import { staticData } from "../data/Static-page";
+import { useRef } from "react";
 
-export default function Requirement({categories,terms}) {
+export default function Requirement({categories,terms,descriptions}) {
+  const fileRef = useRef(null);
   console.log(categories);
+  console.log(terms);
+  console.log(descriptions);
   const {register, handleSubmit, formState: { errors },reset}=useForm();
   const [isActive, setActive] = useState("false");
   const router=useRouter();
   const MySwal = withReactContent(Swal);
   const [file, setFile] = useState();
   const [category, setCategory] = useState();
+  let requirementpageData=requirementData
+  let staticpageData=staticData
+  let myLan
+ 
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+  const [language, setLanguage] = useState(myLan || 'da')
   const toggledescrip = () => {
     setActive(!isActive);  
   };
@@ -127,7 +141,7 @@ export default function Requirement({categories,terms}) {
 
       {/*<!-- banner part start-->*/}
       <div className="requirement_banner">
-        <h2 className="require_h2 text-center"> Describe your requirement</h2>
+        <h2 className="require_h2 text-center"> {(language=='da')?(`${requirementpageData.headingDEN}`):(`${requirementpageData.headingEN}`)}</h2>
       </div>
       {/*<!-- banner part end-->
     <!-- requirement middle body part start -->*/}
@@ -136,7 +150,7 @@ export default function Requirement({categories,terms}) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="all_services">
               <div className="main_btn_box">
-                <b>Choose Category First</b><br></br>
+                <b>{(language=='da')?(`${requirementpageData.categoryDEN}`):(`${requirementpageData.categoryEN}`)}</b><br></br>
                 {categories.map((category,index)=>(
                   <div className="mini_btn_box news" key={index}>
                     <label className="service_btn_b">
@@ -155,40 +169,74 @@ export default function Requirement({categories,terms}) {
                 ))}
                 <div className="clr"></div>
               </div>
-              <span className="errors">{errors.category_id?.type === 'required' && "Category is required"}</span>
+              <span className="errors">{errors.category_id?.type === 'required' && ((language=='da')?(`${requirementpageData.categoryrequriedDEN}`):(`${requirementpageData.categoryrequriedEN}`))}</span>
               <div className="requirement_decription_area text-center ">
                 <h3 className="plus_example">
                   {" "}
                   <a href="#javascript" onClick={toggledescrip}>
                     {" "}
-                    + see example of a good requirement decription here{" "}
+                    + {(language=='da')?(`${requirementpageData.descriptionlineDEN}`):(`${requirementpageData.descriptionlineEN}`)}{" "}
                   </a>
                 </h3>
                 <div className={isActive ? 'infomainbxnw d-none': 'infomainbxnw '}>
                     <div className="infonwtop__modal_box">
                       
                         <div className="craftform__modal_meta">
-                            <span className="craftform__modalpretext">Example</span>
+                            {/* <span className="craftform__modalpretext">Example</span> */}
                             <span className="craftform__modalicon close" onClick={toggledescrip}><i className="fa fa-times" aria-hidden="true"></i></span>
                         </div>
-                        <div className="craftform__modal_content">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et scelerisque diam. Curabitur sodales sit amet purus id malesuada.</p></div>
+                        <div className="craftform__modal_content" dangerouslySetInnerHTML={{ __html: descriptions.content_body }}>
+                        </div>
                     </div>
                 </div>
                 <div className="accept">
                   <div className="t_area">
-                  <textarea className="description" {...register('description', { required: true })} name="description" placeholder="Give a short description of your requirement here">
+                  <textarea className="description" {...register('description', { required: true })} name="description" placeholder={(language=='da')?(`${requirementpageData.descriptionDEN}`):(`${requirementpageData.descriptionEN}`)}>
                   </textarea>
-                  <span className="errors">{errors.description?.type === 'required' && "Description is required"}</span>
+                  <span className="errors">{errors.description?.type === 'required' && ((language=='da')?(`${requirementpageData.descriptionrequriedDEN}`):(`${requirementpageData.descriptionrequriedEN}`))}</span>
                  
                   
                   <div className="peacture_file">
-                    <input type="file" {...register('file', { size:true,type:true })} name="file" onChange={handleChange} accept="image/*" multiple></input> (Optional)
-                    
+                  {(language == 'da') ? (
+                        <>
+                          <div className="parentFile-div">
+                            <a className="btn btn-primary" onClick={() => fileRef.current.click()}>
+                            {(`${requirementpageData.chooseDEN}`)}
+                            </a>
+                            <input
+                              ref={fileRef}
+                              onChange={handleChange}
+                              multiple={true}
+                              type="file"
+                              className="my-file-input"
+                              style={{ display: 'none' }}
+                              hidden
+                            />
+                          </div>
+
+                        </>
+                      ) : (<>
+
+                        <div className="parentFile-div">
+                          <a className="btn btn-primary" onClick={() => fileRef.current.click()}>
+                          {(`${requirementpageData.chooseEN}`)}
+                          </a>
+                          <input
+                            ref={fileRef}
+                            onChange={handleChange}
+                            multiple={true}
+                            type="file"
+                            className="my-file-input"
+                            style={{ display: 'none' }}
+                            hidden
+                          />
+                        </div>
+                        {/* <input type="file" {...register('file', { size: true, type: true })} name="file" accept="image/*" onChange={handleChange} multiple></input> (Optional) */}
+                      </>)}
                   </div>
-                  <span className="errors">{errors.file?.type === 'required' && "File is required"}</span>
-                  <span className="errors">{errors.file?.type === 'size' && "file size too large.Maximum 20MB."}</span>
-                  <span className="errors">{errors.file?.type === 'type' && "files must be a file of type: jpg, jpeg, png"}</span>
+                  <span className="errors">{errors.file?.type === 'required' && ((language=='da')?(`${requirementpageData.filerequriedDEN}`):(`${requirementpageData.filerequriedEN}`))}</span>
+                  <span className="errors">{errors.file?.type === 'size' && ((language=='da')?(`${requirementpageData.filesizeDEN}`):(`${requirementpageData.filesizeEN}`))}</span>
+                  <span className="errors">{errors.file?.type === 'type' && ((language=='da')?(`${requirementpageData.filetypeDEN}`):(`${requirementpageData.filetypeEN}`))}</span>
                   </div>
                   <div className="information_of_all">
                     <div className="form-floating mb-3 mob">
@@ -198,8 +246,8 @@ export default function Requirement({categories,terms}) {
                         id="floatingInput" name="phone" {...register('phone', { required: true})}
                         placeholder="8210185038"
                       />
-                      <label htmlFor="floatingInput">Phone</label>
-                      <span className="errors">{errors.phone?.type === 'required' && "Phone number is required"}</span>
+                      <label htmlFor="floatingInput">{(language=='da')?(`${requirementpageData.phoneDEN}`):(`${requirementpageData.phoneEN}`)}</label>
+                      <span className="errors">{errors.phone?.type === 'required' && ((language=='da')?(`${requirementpageData.phonereqiriedDEN}`):(`${requirementpageData.phonereqiriedEN}`))}</span>
                     </div>
                     <div className="form-floating mail ">
                       <input
@@ -208,8 +256,8 @@ export default function Requirement({categories,terms}) {
                         id="floatingPassword" name="email" {...register('email',{ required: true})}
                         placeholder="E-mail"
                       />
-                      <label htmlFor="floatingPassword">E-mail</label>
-                      <span className="errors">{errors.email?.type === 'required' && "Email is required"}</span>
+                      <label htmlFor="floatingPassword">{(language=='da')?(`${requirementpageData.emailDEN}`):(`${requirementpageData.emailEN}`)}</label>
+                      <span className="errors">{errors.email?.type === 'required' && ((language=='da')?(`${requirementpageData.emailrequriedDEN}`):(`${requirementpageData.emailrequriedEN}`))}</span>
                     </div>
                   </div>
                   <div className="form-floating mb-3 for_n">
@@ -219,8 +267,8 @@ export default function Requirement({categories,terms}) {
                       id="floatingInput" name="name" {...register('name',{ required: true})}
                       placeholder="name"
                     />
-                    <label htmlFor="floatingInput">Name</label>
-                    <span className="errors">{errors.name?.type === 'required' && "Name is required"}</span>
+                    <label htmlFor="floatingInput">{(language=='da')?(`${requirementpageData.nameDEN}`):(`${requirementpageData.nameEN}`)}</label>
+                    <span className="errors">{errors.name?.type === 'required' && ((language=='da')?(`${requirementpageData.namerequriedDEN}`):(`${requirementpageData.namerequriedEN}`))}</span>
                   </div>
 
                   <div className="information_of_all">
@@ -231,8 +279,8 @@ export default function Requirement({categories,terms}) {
                         id="floatingInput" name="address" {...register('address',{ required: true})}
                         placeholder="india"
                       />
-                      <label htmlFor="floatingInput">Address</label>
-                      <span className="errors">{errors.address?.type === 'required' && "address is required"}</span>
+                      <label htmlFor="floatingInput">{(language=='da')?(`${requirementpageData.addressDEN}`):(`${requirementpageData.addressEN}`)}</label>
+                      <span className="errors">{errors.address?.type === 'required' && ((language=='da')?(`${requirementpageData.addressrequriedDEN}`):(`${requirementpageData.addressrequriedEN}`))}</span>
                     </div>
                     <div className="form-floating zip">
                       <input
@@ -241,8 +289,8 @@ export default function Requirement({categories,terms}) {
                         id="floatingPassword" name="zipcode" {...register('zipcode',{ required: true})}
                         placeholder="Code"
                       />
-                      <label htmlFor="floatingPassword">ZIP-code</label>
-                      <span className="errors">{errors.zipcode?.type === 'required' && "Zipcode is required"}</span>
+                      <label htmlFor="floatingPassword">{(language=='da')?(`${requirementpageData.zipcodeDEN}`):(`${requirementpageData.zipcodeEN}`)}</label>
+                      <span className="errors">{errors.zipcode?.type === 'required' && ((language=='da')?(`${requirementpageData.zipcoderequriedDEN}`):(`${requirementpageData.zipcoderequriedEN}`))}</span>
                     </div>
                   </div>
                   <div className="condition">
@@ -270,7 +318,7 @@ export default function Requirement({categories,terms}) {
                           <div className=" show_deta">
                               <div style={{padding : '0px 26px'}} className="container">
                                   <div style={{margin : '21px 0px 0px 0px'}} className="">
-                                    <h2  className="text-center t_c ">Terms and Conditions</h2>
+                                    <h2  className="text-center t_c ">{(language=='da')?(`${staticpageData.termsDEN}`):(`${staticpageData.termsEN}`)}</h2>
                                     <div dangerouslySetInnerHTML={{ __html: terms.content_body }}>
 
                                     </div>
@@ -290,11 +338,11 @@ export default function Requirement({categories,terms}) {
                     </div><br></br>
                     </div>
                     <div className="for_required">
-                    <span className="errors">{errors.accept_checkbox?.type === 'required' && "Checkbox is required"}</span>
+                    <span className="errors">{errors.accept_checkbox?.type === 'required' && ((language=='da')?(`${requirementpageData.checkboxrequriedDEN}`):(`${requirementpageData.checkboxrequriedEN}`))}</span>
                     </div>
                   <div className="get_offer text-center">
                     <button type="submit">
-                      Get 3 offers
+                    {(language=='da')?(`${staticpageData.offersDEN}`):(`${staticpageData.offersEN}`)}
                     </button>
                   </div>
                 </div>
@@ -314,20 +362,22 @@ export async function getServerSideProps({ req, res}) {
   let lang="";
   if (!langSelected.langSelected){ 
     removeCookies('langSelected', { req, res});
-    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
-    lang="en";
+    setCookies('langSelected', 'da', { req, res, maxAge: 60 * 6 * 24 });
+    lang="da";
   }else{
     lang=langSelected.langSelected;
   }
-  const [category, term] = await Promise.all([
+  const [category, term,desc] = await Promise.all([
     axios.get(`/get-categories?lang=${lang}`), 
-    axios.get(`/get-static-content?lang=${lang}&slug=terms_condition`)
+    axios.get(`/get-static-content?lang=${lang}&slug=terms_condition`),
+    axios.get(`/get-static-content?lang=${lang}&slug=requriment_page_form_description`)
   ]);
-  const [categories, terms] = await Promise.all([
+  const [categories, terms,descriptions] = await Promise.all([
     category.data.data, 
-    term.data.data
+    term.data.data,
+    desc.data.data,
   ]);
-  return { props: { categories, terms } };
+  return { props: { categories, terms,descriptions } };
 }
 
 Requirement.getLayout = function getLayout(page) {

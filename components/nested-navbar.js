@@ -4,24 +4,26 @@ import React, { useState, useEffect } from 'react';
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
 import axios from "../lib/axios";
 import Router from 'next/router';
+import {staticData} from './../data/Static-page';
 
 function getLangSelected() {
     const langSelected = getCookies('langSelected');
     if (!langSelected.langSelected) {
         removeCookies('langSelected');
-        setCookies('langSelected', "en");
-        return "en";
+        setCookies('langSelected', "da");
+        return "da";
     } else {
         return langSelected.langSelected;
     }
 }
 export default function NestedNavbar({ myDa, myMainDa }) {
     let myLan
+    let staticpageData=staticData;
     if (typeof window !== 'undefined') {
         myLan = localStorage.getItem('language')
     }
     const [fetchCMSData, setFetchCMSData] = useState(1111);
-    const [langChoose, setLangChoose] = useState(myLan || 'en');
+    const [langChoose, setLangChoose] = useState(myLan || 'da');
     useEffect(() => {
         fetchDemo()
     }, []);
@@ -91,7 +93,7 @@ export default function NestedNavbar({ myDa, myMainDa }) {
                         <ul className="navbar-nav  ms-auto">
                             <li className="nav-item active ">
                                 <Link href="/">
-                                    <a className="nav-link text-black">Home </a>
+                                    <a className="nav-link text-black">{(langChoose=='da')?(`${staticpageData.homeDEN}`):(`${staticpageData.homeEN}`)} </a>
                                 </Link>
                             </li>
                             {/* <li className="nav-item active ">
@@ -111,27 +113,27 @@ export default function NestedNavbar({ myDa, myMainDa }) {
                         </li> */}
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    About
+                                {(langChoose=='da')?(`${staticpageData.aboutDEN}`):(`${staticpageData.aboutEN}`)}
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><Link href="/contact-us"><a className="dropdown-item">Apply to network</a></Link></li>
-                                    <li><Link href="/blogs/list"><a className="dropdown-item">Services blog</a></Link></li>
-                                    <li><Link href="/about-us"><a className="dropdown-item" >About us</a></Link></li>
+                                    <li><Link href="/contact-us"><a className="dropdown-item">{(langChoose=='da')?(`${staticpageData.networkDEN}`):(`${staticpageData.networkEN}`)}</a></Link></li>
+                                    <li><Link href="/blogs/list"><a className="dropdown-item">{(langChoose=='da')?(`${staticpageData.serviceblogDEN}`):(`${staticpageData.serviceblogEN}`)}</a></Link></li>
+                                    <li><Link href="/about-us"><a className="dropdown-item" >{(langChoose=='da')?(`${staticpageData.aboutusDEN}`):(`${staticpageData.aboutusEN}`)}</a></Link></li>
                                 </ul>
                             </li>
                             <li className="nav-item active mx-2">
                                 <Link href="/tenders">
-                                    <a className="nav-link text-black">See private tenders</a>
+                                    <a className="nav-link text-black">{(langChoose=='da')?(`${staticpageData.tendersDEN}`):(`${staticpageData.tendersEN}`)}</a>
                                 </Link>
                             </li>
                             <li className="nav-item active">
                                 <Link href="/hire-a-fixer">
-                                    <a className="nav-link text-black"> Hire a fixer </a>
+                                    <a className="nav-link text-black"> {(langChoose=='da')?(`${staticpageData.hireafixerDEN}`):(`${staticpageData.hireafixerEN}`)} </a>
                                 </Link>
                             </li>
                             <li className="nav-item active pr-2 mx-2">
                                 <Link href="/requirement">
-                                    <a className="nav-link text-white bor_radius"> Get 3 offers </a>
+                                    <a className="nav-link text-white bor_radius"> {(langChoose=='da')?(`${staticpageData.offersDEN}`):(`${staticpageData.offersEN}`)} </a>
                                 </Link>
                             </li>
                             <li className="nav-item dropdown new">

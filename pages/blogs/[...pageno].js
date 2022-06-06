@@ -7,6 +7,7 @@ import Footer from "../../components/footer";
 
 import React, {useState} from 'react';
 import Link from "next/link";
+import { blogData } from '../../data/Blog';
 
 const page=1;
 const limit=6;
@@ -14,6 +15,13 @@ export default function MyData({blog}) {
   const router = useRouter()
   const { pageno } = router.query
   console.log(blog);
+  let blogpageData=blogData
+  let myLan
+ 
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+  const [language, setLanguage] = useState(myLan || 'da')
   return (
     <>
     <Head>
@@ -47,7 +55,7 @@ export default function MyData({blog}) {
                        blog.recents.map((recent,index)=>(
                        <div className="right_details" key={index}>
                         {index==0? 
-                       <h3>RECENT POST</h3>
+                       <h3>{(language=='da')?(`${blogpageData.recentDEN}`):(`${blogpageData.recentEN}`)}</h3>
                        :""}
                        <div className="right_txt_bx">
                        <p><i className="fa fa-angle-right" aria-hidden="true"></i> </p> <p>{recent.title}</p>
@@ -59,7 +67,7 @@ export default function MyData({blog}) {
                        :
                        <div className="right_details">
                          <h3>RECENT POST</h3>
-                         <div className="text-center alert-danger">No blog found.</div>
+                         <div className="text-center alert-danger">{(language=='da')?(`${blogpageData.notfoundDEN}`):(`${blogpageData.notfoundEN}`)}.</div>
                        </div>
                      }
 

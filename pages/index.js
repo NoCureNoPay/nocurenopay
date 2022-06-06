@@ -4,8 +4,11 @@ import styles from "../styles/Home.module.css";
 import Layout from "../components/layout";
 import Link from 'next/link';
 import axios from "../lib/axios";
+import React, { useState } from 'react';
+import { useEffect } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { getCookies, setCookies,checkCookies, removeCookies } from 'cookies-next';
+import { indexData } from "../data/Index";
 
 export default function Home({categories,cmss,blogs,reviews,langSelected}) {
   console.log(categories);
@@ -13,6 +16,17 @@ export default function Home({categories,cmss,blogs,reviews,langSelected}) {
   console.log(blogs);
   console.log(reviews);
   console.log(langSelected);
+  let indexpageData=indexData
+  let myLan
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+
+  const [language, setLanguage] = useState(myLan || 'da')
+
+  useEffect(()=>{
+
+  },[language])
   // return false;
   return (
     <>
@@ -94,7 +108,7 @@ export default function Home({categories,cmss,blogs,reviews,langSelected}) {
       <div className="view text-center py-5">
         <Link href="/about-us">
         <a className="stlbtn">
-          Read more about the concept
+        {(language=='da')?(`${indexpageData.readconceptDEN}`):(`${indexpageData.readconceptEN}`)}
         </a>
         </Link>
       </div>
@@ -127,7 +141,7 @@ export default function Home({categories,cmss,blogs,reviews,langSelected}) {
           <div className="view text-center">
             <Link href="/blogs/list">
             <a className="stlbtn">
-              View services we offer
+            {(language=='da')?(`${indexpageData.viewserviceDEN}`):(`${indexpageData.viewserviceEN}`)}
             </a>
             </Link>
           </div>
@@ -325,7 +339,7 @@ export default function Home({categories,cmss,blogs,reviews,langSelected}) {
                                   <div className="blog_con">
                                       {/* <span className="bloger d-block" >Ashwin Rai</span>  */}
                                       <Link href={`/blogs/${blog.id}`}>
-                                      <a >READ MORE</a>
+                                      <a >{(language=='da')?(`${indexpageData.readmoreDEN}`):(`${indexpageData.readmoreEN}`)}</a>
                                       </Link>
                                   </div>
                           </div>
@@ -344,7 +358,7 @@ export default function Home({categories,cmss,blogs,reviews,langSelected}) {
         <div className="any_requirement py-5">
             <h2>{ReactHtmlParser( cmss[50].content_body )}</h2>
             <Link href="/requirement">
-              <a className="cmn_btn"> Submit here</a>
+              <a className="cmn_btn">{(language=='da')?(`${indexpageData.submithereDEN}`):(`${indexpageData.submithereEN}`)} </a>
               </Link>
         </div>
         {/*<!-- header top section radius section end -->*/}
@@ -359,8 +373,8 @@ export async function getServerSideProps({ req, res }) {
   let langSelected=getCookies({ req, res});
   let lang="";
   if (!langSelected.langSelected){ 
-    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
-    lang="en";
+    setCookies('langSelected', 'da', { req, res, maxAge: 60 * 6 * 24 });
+    lang="da";
   }else{
     lang=langSelected.langSelected;
   }

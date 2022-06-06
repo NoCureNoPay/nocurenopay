@@ -609,6 +609,7 @@ ul {
 }
 .footer-logo-link ul li{
     list-style: none;
+    color: #fff;
 }
 .site-footer .end-sec {
     border-top: 1px solid #878787;
@@ -1938,12 +1939,12 @@ border: 1px solid #D4D4D4;
     line-height: 0;
 }
 .custom_header_logo.drkbg span{
-    background-color: #ffffff !important;
+    /* background-color: #ffffff !important; */
     padding: 2px 5px !important;
     border-radius: 3px;
 }
 .custom_footer_logo span{
-    background-color: #ffffff !important;
+    /* background-color: #ffffff !important; */
     padding: 2px 5px !important;
     border-radius: 3px;
 }
@@ -2026,4 +2027,12 @@ border: 1px solid #D4D4D4;
 }
 .infomainbxnw .craftform__modalicon:hover{
     background: #0377c5;
+}
+
+.my-file-input{
+    display: none !important;
+    position: absolute;
+}
+.parentFile-div{
+    position: relative;
 }

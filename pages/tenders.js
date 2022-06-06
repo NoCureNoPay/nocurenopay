@@ -5,9 +5,17 @@ import axios from "../lib/axios";
 import React, {useState} from 'react';
 import Link from "next/link";
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
+import { tenderData } from "../data/Private-tender";
 
 export default function Tenders({tenders}) {
   console.log(tenders);
+  let tenderpageData=tenderData
+  let myLan
+ 
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+  const [language, setLanguage] = useState(myLan || 'da')
   return (
     <>
       <Head>
@@ -19,7 +27,7 @@ export default function Tenders({tenders}) {
 
       {/*<!-- banner part start-->*/}
       <div className="requirement_banner">
-        <h2 className="require_h2 text-center"> Private tenders</h2>
+        <h2 className="require_h2 text-center"> {(language=='da')?(`${tenderpageData.headingDEN}`):(`${tenderpageData.headingEN}`)}</h2>
       </div>
       {/*<!-- banner part end-->
     <!-- requirement middle body part start -->*/}
@@ -33,12 +41,12 @@ export default function Tenders({tenders}) {
                    <table className="table">
                        <thead>
                          <tr>
-                          <th>Title</th>
-                          <th>Delivery place</th>
-                          <th>Posted date</th>
-                          <th>Delivery date</th>
-                          <th>Budget</th>
-                          <th>Action</th>
+                          <th>{(language=='da')?(`${tenderpageData.titleDEN}`):(`${tenderpageData.titleEN}`)}</th>
+                          <th>{(language=='da')?(`${tenderpageData.placeDEN}`):(`${tenderpageData.placeEN}`)}</th>
+                          <th>{(language=='da')?(`${tenderpageData.postdateDEN}`):(`${tenderpageData.postdateEN}`)}</th>
+                          <th>{(language=='da')?(`${tenderpageData.deliveryDEN}`):(`${tenderpageData.deliveryEN}`)}</th>
+                          <th>{(language=='da')?(`${tenderpageData.budgetDEN}`):(`${tenderpageData.budgetEN}`)}</th>
+                          <th>{(language=='da')?(`${tenderpageData.actionDEN}`):(`${tenderpageData.actionEN}`)}</th>
                          </tr>
                        </thead>
                        <tbody>
@@ -52,7 +60,7 @@ export default function Tenders({tenders}) {
                               <td data-label="Budget">{tender.budget} {tender.currency}</td>
                               <td data-label="Action">
                                 <Link href={`/tenders/${tender.id}`}>
-                                <a >Show Details </a> 
+                                <a >{(language=='da')?(`${tenderpageData.showDEN}`):(`${tenderpageData.showEN}`)} </a> 
                                 </Link>
                               </td>
                             </tr>
@@ -75,12 +83,12 @@ export default function Tenders({tenders}) {
           
            <div className="think_solve">
                <div className="get_offer text-center">
-                   <p>Think you can solve some of these private tenders?</p>
+                   <p>{(language=='da')?(`${tenderpageData.questionDEN}`):(`${tenderpageData.questionEN}`)}</p>
                    <Link href={"/hire-a-fixer"} passHref>
-                   <button className="stlbtn text_trans"> Submit private tender</button>
+                   <button className="stlbtn text_trans"> {(language=='da')?(`${tenderpageData.tenderbuttonDEN}`):(`${tenderpageData.tenderbuttonEN}`)}</button>
                    </Link>
                    <Link href={"/contact-us"} passHref>
-                   <button className="stlbtn text_trans"> Submit a propoasal</button>
+                   <button className="stlbtn text_trans"> {(language=='da')?(`${tenderpageData.proposalbuttonDEN}`):(`${tenderpageData.proposalbuttonEN}`)}</button>
                    </Link>
                </div>
            </div>
@@ -99,8 +107,8 @@ export async function getServerSideProps({ req, res}) {
   let langSelected=getCookies({ req, res});
   let lang="";
   if (!langSelected.langSelected){ 
-    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
-    lang="en";
+    setCookies('langSelected', 'da', { req, res, maxAge: 60 * 6 * 24 });
+    lang="da";
   }else{
     lang=langSelected.langSelected;
   }

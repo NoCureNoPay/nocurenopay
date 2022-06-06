@@ -1,11 +1,19 @@
 import Head from "next/head";
 import NestedLayout from "../components/nested-layout";
-import React from 'react';
+import React, {useState} from 'react';
 import axios from '../lib/axios';
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
+import { staticData } from "../data/Static-page";
 
 export default function PrivacyPolicy({policy}) {
     console.log(policy);
+    let staticpageData=staticData
+  let myLan
+ 
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+  const [language, setLanguage] = useState(myLan || 'da')
   return (
     <>
       <Head>
@@ -17,7 +25,7 @@ export default function PrivacyPolicy({policy}) {
 
       {/*<!-- banner part start-->*/}
       <div className="requirement_banner">
-        <h2 className="require_h2 text-center"> Privacy Policy</h2>
+        <h2 className="require_h2 text-center"> {(language=='da')?(`${staticpageData.privacyDEN}`):(`${staticpageData.privacyEN}`)}</h2>
       </div>
       {/*<!-- banner part end-->
     <!-- requirement middle body part start -->*/}
@@ -38,8 +46,8 @@ export async function getServerSideProps({ req, res}) {
   let langSelected=getCookies({ req, res});
   let lang="";
   if (!langSelected.langSelected){ 
-    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
-    lang="en";
+    setCookies('langSelected', 'da', { req, res, maxAge: 60 * 6 * 24 });
+    lang="da";
   }else{
     lang=langSelected.langSelected;
   }

@@ -4,9 +4,17 @@ import axios from "../lib/axios";
 import React, {useState, useEffect} from 'react';
 import ReactHtmlParser from "react-html-parser";
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
+import { staticData } from '../data/Static-page';
 
 export default function Footer() {
+  let myLan
+  let staticpageData=staticData;
+  if (typeof window !== 'undefined') {
+      myLan = localStorage.getItem('language')
+  }
+
   const [fetchCMSData, setFetchCMSData] = useState(1111);
+  const [langChoose, setLangChoose] = useState(myLan||'en');
   useEffect(() => {
     fetchDemo()
   }, []);
@@ -68,11 +76,11 @@ if (fetchCMSData != 1111){
               <div className="row mt-3">
                 <div className="col-lg-3 col-sm-6 col-6">
                   <div className="footer-logo-link">
-                    <h2 className="footer-title">Company & Info</h2>
+                    <h2 className="footer-title">{(langChoose=='da')?(`${staticpageData.infoDEN}`):(`${staticpageData.infoEN}`)}</h2>
                     <ul>
                       <li>
                       <Link href="/about-us">
-                        <a>About</a>
+                        <a>{(langChoose=='da')?(`${staticpageData.aboutDEN}`):(`${staticpageData.aboutEN}`)}</a>
                         </Link>
                       </li>
                       {/* <li>
@@ -80,12 +88,12 @@ if (fetchCMSData != 1111){
                       </li> */}
                       <li>
                         <Link href="/contact-us">
-                        <a>Join as service provider</a>
+                        <a>{(langChoose=='da')?(`${staticpageData.joinDEN}`):(`${staticpageData.joinEN}`)}</a>
                         </Link>
                       </li>
                       <li>
                       <Link href="/faq">
-                        <a>FAQ</a>
+                        <a>{(langChoose=='da')?(`${staticpageData.faqDEN}`):(`${staticpageData.faqEN}`)}</a>
                         </Link>
                       </li>
                     </ul>
@@ -103,17 +111,17 @@ if (fetchCMSData != 1111){
                       </li>
                       <li>
                       <Link href="/terms-condition">
-                        <a>Terms & conditions</a>
+                        <a>{(langChoose=='da')?(`${staticpageData.termsDEN}`):(`${staticpageData.termsEN}`)}</a>
                         </Link>
                       </li>
                       <li>
                       <Link href={"/privacy-policy"}>
-                        <a>Privacy policy</a>
+                        <a>{(langChoose=='da')?(`${staticpageData.privacyDEN}`):(`${staticpageData.privacyEN}`)}</a>
                         </Link>
                       </li>
                       <li>
                       <Link href={"/contact-us"}>
-                        <a>Contact us</a>
+                        <a>{(langChoose=='da')?(`${staticpageData.contactusDEN}`):(`${staticpageData.contactusEN}`)}</a>
                         </Link>
                       </li>
                     </ul>

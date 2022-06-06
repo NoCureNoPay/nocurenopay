@@ -6,10 +6,18 @@ import axios from "../../lib/axios";
 import Footer from "../../components/footer";
 import React, { useState } from 'react';
 import Link from "next/link";
+import { tenderData } from '../../data/Private-tender';
 export default function MyData({ tenders }) {
   const router = useRouter()
   const { pageno } = router.query
-  console.log(tenders)
+  console.log(tenders);
+  let tenderpageData=tenderData
+  let myLan
+ 
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+  const [language, setLanguage] = useState(myLan || 'da')
   return(
     <>
       <Head>
@@ -21,7 +29,7 @@ export default function MyData({ tenders }) {
       <NestedLayout></NestedLayout>
       {/*<!-- banner part start-->*/}
       <div className="requirement_banner">
-        <h2 className="require_h2 text-center"> Private tenders Details</h2>
+        <h2 className="require_h2 text-center"> {(language=='da')?(`${tenderpageData.detailsDEN}`):(`${tenderpageData.detailsEN}`)}</h2>
       </div>
       {/*<!-- banner part end-->*/}
       {/*<!-- requirement middle body part start -->*/}
@@ -32,23 +40,23 @@ export default function MyData({ tenders }) {
             <div className="requirement_decription_area  ">
               <div className="main_detail_box my-3">
                 <div className="details_box d-flex">
-                  <label htmlFor="">Title :-</label>
+                  <label htmlFor="">{(language=='da')?(`${tenderpageData.titleDEN}`):(`${tenderpageData.titleEN}`)} :-</label>
                   <p>{tenders.data.title}</p>
                 </div>
 
               </div>
               <div className="details_box d-flex my-3">
-                <label htmlFor="">Description :- </label>
+                <label htmlFor="">{(language=='da')?(`${tenderpageData.descriptionDEN}`):(`${tenderpageData.descriptionEN}`)} :- </label>
                 <p> {tenders.data.description} </p>
               </div>
 
               <div className="main_detail_box my-3">
                 <div className="details_box d-flex">
-                  <label htmlFor="">Deadline :-</label>
+                  <label htmlFor="">{(language=='da')?(`${tenderpageData.deliveryDEN}`):(`${tenderpageData.deliveryEN}`)} :-</label>
                   <p> {tenders.data.deadline_date}</p>
                 </div>
                 <div className="details_box right_data d-flex">
-                  <label htmlFor="">Your Budget :-</label>
+                  <label htmlFor="">{(language=='da')?(`${tenderpageData.budgetDEN}`):(`${tenderpageData.budgetEN}`)} :-</label>
                   <p> {tenders.data.budget} {tenders.data.currency}</p>
                 </div>
               </div>
@@ -68,11 +76,11 @@ export default function MyData({ tenders }) {
                 </div> */}
               <div className="main_detail_box my-3">
                 <div className="details_box d-flex">
-                  <label htmlFor="">Address :-</label>
+                  <label htmlFor="">{(language=='da')?(`${tenderpageData.placeDEN}`):(`${tenderpageData.placeEN}`)} :-</label>
                   <p>  {tenders.data.address} </p>
                 </div>
                 <div className="details_box right_data d-flex">
-                  <label htmlFor="">ZIP code :-</label>
+                  <label htmlFor="">{(language=='da')?(`${tenderpageData.zipcodeDEN}`):(`${tenderpageData.zipcodeEN}`)} :-</label>
                   <p> {tenders.data.zipcode}</p>
                 </div>
               </div>
@@ -93,9 +101,9 @@ export default function MyData({ tenders }) {
 
             <div className="think_solve">
               <div className="get_offer text-center">
-                <p>Think you can solve some of these private tenders?</p>
+                <p>{(language=='da')?(`${tenderpageData.questionDEN}`):(`${tenderpageData.questionEN}`)}</p>
                 <Link href={"/contact-us"} passHref>
-                  <button className="stlbtn text_trans"> Submit a proposal</button>
+                  <button className="stlbtn text_trans"> {(language=='da')?(`${tenderpageData.proposalbuttonDEN}`):(`${tenderpageData.proposalbuttonEN}`)}</button>
                 </Link>
               </div>
             </div>

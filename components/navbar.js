@@ -4,27 +4,31 @@ import axios from "../lib/axios";
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
+import {indexData} from './../data/Index';
+import {staticData} from './../data/Static-page';
 
 function getLangSelected() {
   const langSelected = getCookies('langSelected');
-
+  
   if (!langSelected.langSelected) {
     console.log(langSelected);
     removeCookies('langSelected');
-    setCookies('langSelected', "en");
-    return "en";
+    setCookies('langSelected', "da");
+    return "da";
   } else {
     return langSelected.langSelected;
   }
 }
 export default function Navbar({ cms }) {
   let myLan
+  let indexpageData=indexData;
+  let staticpageData=staticData;
   if (typeof window !== 'undefined') {
       myLan = localStorage.getItem('language')
   }
 
   const [fetchCMSData, setFetchCMSData] = useState(1111);
-  const [langChoose, setLangChoose] = useState(myLan||'en');
+  const [langChoose, setLangChoose] = useState(myLan||'da');
 
   useEffect(() => {
     fetchDemo()
@@ -108,7 +112,7 @@ export default function Navbar({ cms }) {
               <li className="nav-item active ">
                 <Link href="/">
                   <a className="nav-link text-white">
-                    Home
+                  {(langChoose=='da')?(`${staticpageData.homeDEN}`):(`${staticpageData.homeEN}`)}
                   </a>
                 </Link>
               </li>
@@ -135,26 +139,26 @@ export default function Navbar({ cms }) {
               </li> */}
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  About
+                {(langChoose=='da')?(`${staticpageData.aboutDEN}`):(`${staticpageData.aboutEN}`)}
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><Link href="/contact-us"><a className="dropdown-item">Apply to network</a></Link></li>
-                  <li><Link href="/blogs/list"><a className="dropdown-item">Services blog</a></Link></li>
-                  <li><Link href="/about-us"><a className="dropdown-item" >About us</a></Link></li>
+                  <li><Link href="/contact-us"><a className="dropdown-item">{(langChoose=='da')?(`${staticpageData.networkDEN}`):(`${staticpageData.networkEN}`)}</a></Link></li>
+                  <li><Link href="/blogs/list"><a className="dropdown-item">{(langChoose=='da')?(`${staticpageData.serviceblogDEN}`):(`${staticpageData.serviceblogEN}`)}</a></Link></li>
+                  <li><Link href="/about-us"><a className="dropdown-item" >{(langChoose=='da')?(`${staticpageData.aboutusDEN}`):(`${staticpageData.aboutusEN}`)}</a></Link></li>
                 </ul>
               </li>
 
               <li className="nav-item active mx-2">
                 <Link href="/tenders">
                   <a className="nav-link text-white">
-                    See private tenders
+                  {(langChoose=='da')?(`${staticpageData.tendersDEN}`):(`${staticpageData.tendersEN}`)}
                   </a>
                 </Link>
               </li>
               <li className="nav-item active">
                 <Link href="/hire-a-fixer">
                   <a className="nav-link text-white">
-                    Hire a fixer
+                  {(langChoose=='da')?(`${staticpageData.hireafixerDEN}`):(`${staticpageData.hireafixerEN}`)}
                   </a>
                 </Link>
               </li>
@@ -162,7 +166,7 @@ export default function Navbar({ cms }) {
                 <Link href="/requirement">
                   <a className="nav-link text-white bor_radius">
                     {" "}
-                    Get 3 offers
+                    {(langChoose=='da')?(`${staticpageData.offersDEN}`):(`${staticpageData.offersEN}`)}
                   </a>
                 </Link>
               </li>
@@ -215,7 +219,7 @@ export default function Navbar({ cms }) {
           </h2>
           <p dangerouslySetInnerHTML={{ __html: context_dt2 }}>
           </p>
-          <button onClick={redirectRequirmentPage}>Post a requirement</button>
+          <button onClick={redirectRequirmentPage}>{(langChoose=='da')?(`${indexpageData.postDEN}`):(`${indexpageData.postEN}`)}</button>
         </div>
         {/*<!-- banner part end-->*/}
       </div>

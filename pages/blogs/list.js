@@ -5,6 +5,7 @@ import axios from "../../lib/axios";
 import React, {useState} from 'react';
 import Link from "next/link";
 import { getCookies, setCookies, removeCookies } from 'cookies-next';
+import { blogData } from "../../data/Blog";
 
 const page=1;
 const limit=6;
@@ -12,6 +13,13 @@ export default function Blogs({blogs}) {
   console.log(blogs);
   const [page,setPage]=useState(1);
   const [Items, setItems] = useState([]);
+  let blogpageData=blogData
+  let myLan
+ 
+  if (typeof window !== 'undefined') {
+    myLan = localStorage.getItem('language')
+  }
+  const [language, setLanguage] = useState(myLan || 'da')
   function loadMoreItems() {
     setIsFetching(true);
 
@@ -44,7 +52,7 @@ export default function Blogs({blogs}) {
 
       {/*<!-- banner part start-->*/}
       <div className="requirement_banner">
-        <h2 className="require_h2 text-center"> Blog Post</h2>
+        <h2 className="require_h2 text-center"> {(language=='da')?(`${blogpageData.headingDEN}`):(`${blogpageData.headingEN}`)}</h2>
       </div>
       {/*<!-- banner part end-->
     <!-- requirement middle body part start -->*/}
@@ -63,7 +71,7 @@ export default function Blogs({blogs}) {
                                 <div className="blog_con">
                                     {/* <span className="bloger d-block" >Ashwin Rai</span>  */}
                                     <Link href={`/blogs/${blog.id}`}>
-                                     <a >READ MORE</a>
+                                     <a >{(language=='da')?(`${blogpageData.readDEN}`):(`${blogpageData.readEN}`)}</a>
                                      </Link>
                                  </div>
                         </div>
@@ -95,8 +103,8 @@ export async function getServerSideProps({ req, res }) {
   let langSelected=getCookies({ req, res});
   let lang="";
   if (!langSelected.langSelected){ 
-    setCookies('langSelected', 'en', { req, res, maxAge: 60 * 6 * 24 });
-    lang="en";
+    setCookies('langSelected', 'da', { req, res, maxAge: 60 * 6 * 24 });
+    lang="da";
   }else{
     lang=langSelected.langSelected;
   }
