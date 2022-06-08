@@ -2036,3 +2036,11 @@ border: 1px solid #D4D4D4;
 .parentFile-div{
     position: relative;
 }
+.quote_mini_box h2 p{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: #2B337C;
+    text-align: center;
+    padding-top: 9px;
+    margin-bottom: 2px;
+}
