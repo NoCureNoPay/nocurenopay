@@ -59,9 +59,14 @@ export default function Tenders({tenders}) {
                               <td data-label="Delivery date">{tender.deadline_date}</td>
                               <td data-label="Budget">{tender.budget} {tender.currency}</td>
                               <td data-label="Action">
+                              {tender.status == 4 ?
+                                <span style={{ pointerEvents: 'none' }}>Done</span>
+                                :
                                 <Link href={`/tenders/${tender.id}`}>
                                 <a >{(language=='da')?(`${tenderpageData.showDEN}`):(`${tenderpageData.showEN}`)} </a> 
                                 </Link>
+                                
+                              }
                               </td>
                             </tr>
                           ))

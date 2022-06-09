@@ -2044,3 +2044,13 @@ border: 1px solid #D4D4D4;
     padding-top: 9px;
     margin-bottom: 2px;
 }
+.table tbody tr td:nth-child(2n+6) span {
+    margin-left: 3px;
+    text-decoration: none;
+    background-color: #9da4a9;
+    padding: 8px 10px;
+    border-radius: 24px;
+    font-weight: 600;
+    color: #fff;
+    font-size: 11px;
+}
