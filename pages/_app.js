@@ -16,7 +16,7 @@ export default function MyApp({ Component, pageProps }) {
     <React.Fragment>
      <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=UA-226942804-1`}
+        src={`https://www.googletagmanager.com/gtag/js?id=G-503NGSCB6Z`}
       />
 
       <Script id='google-analytics' strategy="afterInteractive">
@@ -24,7 +24,7 @@ export default function MyApp({ Component, pageProps }) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'UA-226942804-1', {
+            gtag('config', 'G-503NGSCB6Z', {
               page_path: window.location.pathname,
             });
                 `}
