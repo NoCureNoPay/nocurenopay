@@ -2054,3 +2054,8 @@ border: 1px solid #D4D4D4;
     color: #fff;
     font-size: 11px;
 }
+.cateTitle{
+    margin: 0;
+    font-weight: 600;
+    text-align: center;
+}

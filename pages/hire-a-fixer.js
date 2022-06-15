@@ -272,7 +272,7 @@ const handleInputFile = (e) => {
                   <div className="condition">
                     <div className="mb-3 form-check">
                       <input type="checkbox" className="form-check-input" id="exampleCheck1" {...register('accept_checkbox', { required: true })} />
-                      <label className="form-check-label " htmlFor="exampleCheck1"> I accept the <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">conditions </a>  and <Link href="/privacy-policy"><a>privacy policy</a></Link></label>
+                      <label className="form-check-label " htmlFor="exampleCheck1"> I accept the <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">{(language=='da')?(`${pageData.conditionDEN}`):(`${pageData.conditionEN}`)} </a>  and <Link href="/privacy-policy"><a target="_blank">{(language=='da')?(`${staticpageData.privacyDEN}`):(`${staticpageData.privacyEN}`)}</a></Link></label>
                       {/* <!-- Modal --> */}
                       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog modal-xl">

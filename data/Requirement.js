@@ -43,4 +43,6 @@ export const requirementData = {
     filetypeDEN:"filer skal være en fil af typen: jpg, jpeg, png.",
     chooseEN: "Choose File",
     chooseDEN:"Vælg fil",
+    conditionEN: "Conditions",
+    conditionDEN:"Betingelser",
 };

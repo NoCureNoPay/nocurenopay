@@ -150,7 +150,7 @@ export default function Requirement({categories,terms,descriptions}) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="all_services">
               <div className="main_btn_box">
-                <b>{(language=='da')?(`${requirementpageData.categoryDEN}`):(`${requirementpageData.categoryEN}`)}</b><br></br>
+                <h5 className="cateTitle">{(language=='da')?(`${requirementpageData.categoryDEN}`):(`${requirementpageData.categoryEN}`)}</h5><br></br>
                 {categories.map((category,index)=>(
                   <div className="mini_btn_box news" key={index}>
                     <label className="service_btn_b">
@@ -302,8 +302,8 @@ export default function Requirement({categories,terms,descriptions}) {
                       />
                       <label className="form-check-label " htmlFor="exampleCheck1">
                         {" "}
-                        I accept the <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">conditions </a> and{" "}
-                        <Link href="/privacy-policy"><a>privacy policy</a></Link>
+                        I accept the <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">{(language=='da')?(`${requirementpageData.conditionDEN}`):(`${requirementpageData.conditionEN}`)} </a> and{" "}
+                        <Link href="/privacy-policy"><a target="_blank">{(language=='da')?(`${staticpageData.privacyDEN}`):(`${staticpageData.privacyEN}`)}</a></Link>
                       </label>
                       {/* <!-- Modal --> */}
                       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

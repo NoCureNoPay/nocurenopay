@@ -24,7 +24,7 @@ export default function MyData({ tenders }) {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Private tenders details | No Cure No Pay </title>
+        <title>Private tenders details of {tenders.data.title} |{tenders.data.budget} {tenders.data.currency} | No Cure No Pay </title>
       </Head>
       <NestedLayout></NestedLayout>
       {/*<!-- banner part start-->*/}
